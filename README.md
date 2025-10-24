@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Idea Weave AI
 
-## Getting Started
+React + TypeScript single-page app (CRA) with Tailwind CSS, Redux Toolkit, Radix UI primitives, i18n, routing, and syntax-highlighted markdown chat UI.
 
-First, run the development server:
+### Description
+
+Idea Weave AI is an AI‑assisted ideation playground. It lets you chat, experiment with agent behaviors, and organize prompts while keeping settings, themes, and language preferences persistent. The UI focuses on speed and clarity using Radix primitives and Tailwind.
+
+- Interactive chat with typing effect, markdown rendering, and code highlighting
+- Prompt library (create/edit), agent selection, output and regular settings panels
+- User profile, API key and license key drawers; image previews in chat
+- Light/dark themes, English/French localization
+- State management via Redux Toolkit with persistence
+
+### Prerequisites
+
+- Node.js 18+ (LTS recommended)
+- npm 8+
+
+### Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App runs at `http://localhost:3000/`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Available scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm start`: Start dev server (CRA / react-scripts)
+- `npm run build`: Production build to `build/`
+- `npm test`: Run tests
+- `npm run lint`: Lint `src/**/*.{js,jsx,ts,tsx}`
+- `npm run lint:fix`: Lint with autofix
+- `npm run format`: Prettier format for TS/JS/CSS/MD
 
-## Learn More
+### Tech stack
 
-To learn more about Next.js, take a look at the following resources:
+- React 18, TypeScript 4.9
+- React Router v6
+- Redux Toolkit + Redux Persist
+- Tailwind CSS + tailwind-merge
+- Radix UI primitives (Accordion, Select, Dialog, Tooltip, etc.)
+- i18next + react-i18next (locales in `src/locales/`)
+- Markdown rendering with `react-markdown` and code highlighting via `react-syntax-highlighter`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Project structure (high level)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+public/              # static assets
+src/
+  components/        # UI and shared components
+  pages/home/        # main page
+  reducers/          # Redux slices and root reducer
+  routes/            # router setup
+  lib/utils/         # utilities (e.g., className merge)
+  i18n.ts            # i18n configuration
+  index.tsx          # app bootstrap
+```
 
-## Deploy on Vercel
+### Troubleshooting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- "react-scripts is not recognized": run `npm install` to install dependencies, then `npm start`.
+- TS2786 errors for React icons: we pin `react-icons` to `4.12.0` and `@types/react`/`@types/react-dom` to 18.2.x to align with TypeScript 4.9. If upgrading TypeScript, you can revisit these pins.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### License
+
+Private project. All rights reserved.
