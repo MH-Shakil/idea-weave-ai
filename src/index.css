@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    font-family: 'Montserrat', sans-serif !important;
+}
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+h5 {
+    font-size: 12px;
+    font-weight: 600;
+}
+code {
+    background-color: var(--bg-dark-to-white-color);
+    color: var(--text-color-dark-fourth);
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+pre code {
+    background-color: transparent;
+}
+
+body {
+    @apply font-montserrat;
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif !important;
+}
+/***** Font Family ******/
+/* Font Family Inter */
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    src: url('../public/font/montserrat/Montserrat-Regular.ttf')
+        format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    src: url('../public/font/montserrat/Montserrat-Medium.ttf')
+        format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    src: url('../public/font/montserrat/Montserrat-SemiBold.ttf')
+        format('truetype');
+
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    src: url('../public/font/montserrat/Montserrat-Bold.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    src: url('../public/font/montserrat/Montserrat-ExtraBold.ttf')
+        format('truetype');
+    font-style: normal;
+}
+
+/* Font Family Inter */
+@font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    src: url('../public/font/inter/Inter-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 500;
+    src: url('../public/font/inter/Inter-Medium.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 600;
+    src: url('../public/font/inter/Inter-SemiBold.ttf') format('truetype');
+
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    src: url('../public/font/inter/Inter-Bold.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter';
+    font-weight: 800;
+    src: url('../public/font/inter/Inter-ExtraBold.ttf') format('truetype');
+    font-style: normal;
+}
