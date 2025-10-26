@@ -22,7 +22,7 @@ const LicenseKey: React.FC<LicenseKeyProps> = ({
     const dispatch = useDispatch()
     return (
         <div className="flex w-full items-center justify-center">
-            <div className="relative w-[690px] rounded-lg bg-[var(--sidebar-bg-color)] px-14 py-4 font-montserrat transition-all duration-500">
+            <div className="relative w-[690px] rounded-xl border border-[var(--bg-border-color)] bg-gradient-to-br from-[var(--sidebar-bg-color)] to-[var(--bg-ai-bot-text-color)] px-14 py-6 font-montserrat shadow-sm transition-all duration-500">
                 <CloseIcon
                     className="absolute right-5 top-5 cursor-pointer duration-300 active:scale-90"
                     onClick={() => {
@@ -32,12 +32,17 @@ const LicenseKey: React.FC<LicenseKeyProps> = ({
                         dispatch(closeUserProfile())
                     }}
                 />
-                <h2 className="border-b border-[var(--bg-border-color)] pb-5 text-center text-[24px] font-semibold text-[var(--text-color-dark)]">
-                    Enter License Key
-                </h2>
+                <div className="text-center">
+                    <h2 className="font-extrabold bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] bg-clip-text text-[24px] text-transparent">
+                        Enter License Key
+                    </h2>
+                    <p className="mt-1 text-sm text-[var(--text-color-secondary)]">
+                        Activate Pro features across your devices
+                    </p>
+                </div>
 
-                <div className="mt-[48px] flex w-full items-start justify-between gap-3">
-                    <label className="mt-3 block flex-shrink-0 text-[16px] font-medium text-[var(--text-color-dark)]">
+                <div className="mt-[32px] flex w-full items-start justify-between gap-3">
+                    <label className="mt-3 block flex-shrink-0 text-[16px] font-medium text-[var(--text-color-base)]">
                         License Key :
                     </label>
                     <div className="w-full">
@@ -45,24 +50,20 @@ const LicenseKey: React.FC<LicenseKeyProps> = ({
                             mainClassName="w-full"
                             type="text"
                             placeholder="XXXXXXXXX-XXXXXXXXX"
-                            className="h-[50px] w-full flex-shrink-0 border-0 bg-[var(--bg-primary-color)] focus:outline-none"
+                            className="h-[50px] w-full flex-shrink-0 border border-[var(--bg-border-color)] focus:outline-none"
                         />
-                        <p className="mt-2 cursor-pointer text-[14px] text-[var(--text-color-dark-fifth)]">
+                        <p className="mt-2 cursor-pointer text-[14px] text-[var(--link-color)]">
                             How to get new license key
                         </p>
                     </div>
                 </div>
-                <div className="mt-[54px] flex justify-end gap-4">
-                    <Button variant="primary" className="w-[100px]">
+                <div className="mt-[36px] flex justify-end gap-3">
+                    <Button variant="primary" className="w-[120px]">
                         Create
                     </Button>
                     <Button
                         variant="outline"
-                        className="w-[100px] font-bold"
-                        // onClick={() =>
-                        //     setSelectedActionButton &&
-                        //     setSelectedActionButton('')
-                        // }
+                        className="w-[120px] font-bold text-[var(--text-color-base)]"
                     >
                         Unlink Device
                     </Button>

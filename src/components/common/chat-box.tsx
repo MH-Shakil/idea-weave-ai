@@ -207,7 +207,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ messages = [] }) => {
                         dispatch(closeLicenseKey())
                     }}
                 >
-                    <BotAvatar />
+                    {/* <BotAvatar /> */}
+                    <img
+                        src="./images/IdeaWeaveAi-transparent.png"
+                        alt="bot-avatar"
+                        width={46}
+                        height={46}
+                        className="rounded-full"
+                    />
                 </div>
             )
         },

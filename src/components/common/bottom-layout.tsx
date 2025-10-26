@@ -1,34 +1,14 @@
 // import { useTranslation } from "react-i18next";
 
-import ArrowRightIcon from './svg-icons/arrow-right-icon'
 import AttachmentIcon from './svg-icons/attachment-Icon'
-import PromptIcon from './svg-icons/prompt-icon'
-import SettingsIconSecond from './svg-icons/settings-icon-second'
 import MikeIcon from './svg-icons/mike-icon'
 import SendIcon from './svg-icons/send-icon'
 import CloseIconSmall from './svg-icons/close-icon-small'
 import { cn } from '../../lib/utils'
-import { closeLicenseKey } from '../../reducers/lisenceKeyReducer'
-import { closeApiKey } from '../../reducers/apiKeyReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { TextAreafield } from '../ui/textarea'
 import { useEffect, useRef } from 'react'
 import { setInputFocus } from '../../reducers/inputFocus'
-import { closeSettings } from '../../reducers/settingsReducer'
-import { closeUserProfile } from '../../reducers/userProfileReducer'
-import { RootState } from '../../store'
-import {
-    closeApplyingSettings,
-    openApplyingSettings,
-} from '../../reducers/applySettingsReducer'
-import { closePrompt, openPrompt } from '../../reducers/promptsReducer'
-import {
-    closeOutputSettings,
-    openOutputSettings,
-} from '../../reducers/outputSettingsReudcer'
-import { closeAgentSelection } from '../../reducers/agentSelectionReducer'
-import { closeCreatePrompt } from '../../reducers/createPromptsReducer'
-import { closeEditPrompt } from '../../reducers/editPromtsReducer'
 
 interface BottomLayoutProps {
     title?: string
@@ -62,13 +42,7 @@ const BottomLayout: React.FC<BottomLayoutProps> = ({
         (state: any) => state.focus.isInputFocused
     )
     const inputRef = useRef<HTMLTextAreaElement | null>(null)
-    const { isApplyingSettingsOpen } = useSelector(
-        (state: RootState) => state.applySettings
-    )
-    const { isOutputSettingsOpen } = useSelector(
-        (state: RootState) => state.outputSettings
-    )
-    const { isPromptOpen } = useSelector((state: RootState) => state.prompts)
+    // removed header quick-controls from bottom layout
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files
@@ -113,105 +87,7 @@ const BottomLayout: React.FC<BottomLayoutProps> = ({
                 filePreviews && 'mt-4'
             )}
         >
-            <div className="mt-3 flex gap-2">
-                <div className="max-w-[238px]">
-                    <div className="flex items-center justify-between gap-6 rounded-[10px] bg-[var(--sidebar-bg-color)] px-2 py-[2px] transition-all duration-500">
-                        <div
-                            className={cn(
-                                'flex cursor-pointer flex-col items-center justify-center gap-[0px] rounded-lg px-[4px] py-[2px] hover:bg-[var(--bg-hover-color)]',
-                                isApplyingSettingsOpen &&
-                                    'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
-                            )}
-                            onClick={() => {
-                                dispatch(openApplyingSettings())
-                                dispatch(closeSettings())
-                                dispatch(closeAgentSelection())
-                                dispatch(closeOutputSettings())
-                                dispatch(closePrompt())
-                                dispatch(closeLicenseKey())
-                                dispatch(closeApiKey())
-                                dispatch(closeUserProfile())
-                                dispatch(closeCreatePrompt())
-                                dispatch(closeEditPrompt())
-                            }}
-                        >
-                            <SettingsIconSecond
-                                selectColor={isApplyingSettingsOpen}
-                            />
-                            <h5
-                                className={cn(
-                                    'text-[13px] font-medium text-[var(--text-color-base)]',
-                                    isApplyingSettingsOpen &&
-                                        'text-[var(--text-color-dark-fourth)]'
-                                )}
-                            >
-                                Setting
-                            </h5>
-                        </div>
-                        <div
-                            className={cn(
-                                'flex cursor-pointer flex-col items-center justify-center gap-[0px] rounded-lg px-[4px] py-[2px] hover:bg-[var(--bg-hover-color)]',
-                                isOutputSettingsOpen &&
-                                    'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
-                            )}
-                            onClick={() => {
-                                dispatch(openOutputSettings())
-                                dispatch(closeApplyingSettings())
-                                dispatch(closeSettings())
-                                dispatch(closeAgentSelection())
-                                dispatch(closePrompt())
-                                dispatch(closeLicenseKey())
-                                dispatch(closeApiKey())
-                                dispatch(closeUserProfile())
-                                dispatch(closeCreatePrompt())
-                                dispatch(closeEditPrompt())
-                            }}
-                        >
-                            <ArrowRightIcon
-                                selectColor={isOutputSettingsOpen}
-                            />
-                            <h5
-                                className={cn(
-                                    'text-[13px] font-medium text-[var(--text-color-base)]',
-                                    isOutputSettingsOpen &&
-                                        'text-[var(--text-color-dark-fourth)]'
-                                )}
-                            >
-                                Output
-                            </h5>
-                        </div>
-                        <div
-                            className={cn(
-                                'flex cursor-pointer flex-col items-center justify-center gap-[0px] rounded-lg px-[4px] py-[2px] hover:bg-[var(--bg-hover-color)]',
-                                isPromptOpen &&
-                                    'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
-                            )}
-                            onClick={() => {
-                                dispatch(openPrompt())
-                                dispatch(closeApplyingSettings())
-                                dispatch(closeSettings())
-                                dispatch(closeAgentSelection())
-                                dispatch(closeLicenseKey())
-                                dispatch(closeApiKey())
-                                dispatch(closeUserProfile())
-                                dispatch(closeCreatePrompt())
-                                dispatch(closeEditPrompt())
-                                dispatch(closeOutputSettings())
-                            }}
-                        >
-                            <PromptIcon selectColor={isPromptOpen} />
-                            <h5
-                                className={cn(
-                                    'text-[13px] font-medium text-[var(--text-color-base)]',
-                                    isPromptOpen &&
-                                        'text-[var(--text-color-dark-fourth)]'
-                                )}
-                            >
-                                Prompts
-                            </h5>
-                        </div>
-                    </div>
-                </div>
+            <div className="mt-3">
                 <div className="relative w-full">
                     {/* Image Preview Section */}
                     {filePreviews && filePreviews.length > 0 && (

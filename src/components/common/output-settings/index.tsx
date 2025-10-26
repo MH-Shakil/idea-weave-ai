@@ -24,228 +24,236 @@ const OutputSettings: React.FC<OutputSettingsProps> = ({
 }) => {
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const languageOption = [
+
+    const languageOptions = [
+        { value: 'en_us', label: t('English (US)') as unknown as string },
+        { value: 'en_gb', label: t('English (UK)') as unknown as string },
+        { value: 'auto', label: t('Auto-detect') as unknown as string },
+    ]
+
+    const toneOptions = [
+        { value: 'neutral', label: t('Neutral') as unknown as string },
+        { value: 'friendly', label: t('Friendly') as unknown as string },
         {
-            value: 'Language 1',
-            label: `${t('Language 1')}`,
-        },
-        {
-            value: 'Language 2',
-            label: `${t('Language 2')}`,
+            value: 'professional',
+            label: t('Professional') as unknown as string,
         },
     ]
-    const ToneOptions = [
+
+    const styleOptions = [
+        { value: 'concise', label: t('Concise') as unknown as string },
+        { value: 'detailed', label: t('Detailed') as unknown as string },
         {
-            value: 'Tone 1',
-            label: `${t('Tone 1')}`,
-        },
-        {
-            value: 'Tone 2',
-            label: `${t('Tone 2')}`,
-        },
-    ]
-    const StyleOptions = [
-        {
-            value: 'Style 1',
-            label: `${t('Style 1')}`,
-        },
-        {
-            value: 'Style 2',
-            label: `${t('Style 2')}`,
+            value: 'structured',
+            label: t('Structured (Bulleted)') as unknown as string,
         },
     ]
-    const FormatOptions = [
-        {
-            value: 'Format 1',
-            label: `${t('Format 1')}`,
-        },
-        {
-            value: 'Format 2',
-            label: `${t('Format 2')}`,
-        },
+
+    const formatOptions = [
+        { value: 'paragraph', label: t('Paragraph') as unknown as string },
+        { value: 'markdown', label: t('Markdown') as unknown as string },
+        { value: 'text', label: t('Plain Text') as unknown as string },
     ]
+
     return (
-        <div className="relative w-full overflow-y-auto rounded-lg bg-[var(--sidebar-bg-color)] px-14 py-4 font-montserrat transition-all duration-500">
-            <CloseIcon
-                className="absolute right-5 top-5 cursor-pointer duration-300 active:scale-90"
-                onClick={() => {
-                    dispatch(closeOutputSettings())
-                }}
-            />
-            <h2 className="border-b border-[var(--bg-border-color)] pb-5 text-center text-[24px] font-semibold text-[var(--text-color-dark)]">
-                Output Settings
-            </h2>
-            <div className="mx-auto mt-8 flex w-[360px] flex-col gap-5">
-                <div className="flex items-center justify-between">
-                    <label className="block w-[30%] text-[16px] font-medium text-[var(--text-color-dark)]">
-                        Language:
-                    </label>
-                    <PrimarySelect
-                        mainClassName="w-[175px] border border-[var(--text-color-base)] font-inter py-1 h-[35px] px-2 w-[50%]"
-                        options={languageOption}
-                    />
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown
-                                    printer
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <div className="flex items-center justify-between">
-                    <label className="block w-[30%] text-[16px] font-medium text-[var(--text-color-dark)]">
-                        Tone:
-                    </label>
-                    <PrimarySelect
-                        mainClassName="w-[175px] border border-[var(--text-color-base)] font-inter py-1 h-[35px] px-2 w-[50%]"
-                        options={ToneOptions}
-                    />
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown
-                                    printer
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <div className="flex items-center justify-between">
-                    <label className="block w-[30%] text-[16px] font-medium text-[var(--text-color-dark)]">
-                        Style:
-                    </label>
-                    <PrimarySelect
-                        mainClassName="w-[175px] border border-[var(--text-color-base)] font-inter py-1 h-[35px] px-2 w-[50%]"
-                        options={StyleOptions}
-                    />
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown
-                                    printer
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <div className="flex items-center justify-between">
-                    <label className="block w-[30%] text-[16px] font-medium text-[var(--text-color-dark)]">
-                        Format:
-                    </label>
-                    <PrimarySelect
-                        mainClassName="w-[175px] border border-[var(--text-color-base)] font-inter py-1 h-[35px] px-2 w-[50%]"
-                        options={FormatOptions}
-                    />
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown
-                                    printer
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <div className="mt-[50px] flex items-center gap-[10px]">
-                    <Checkbox />
-                    <p className="text-[var(--text-color-base)]">
-                        Set all as Default
+        <div className="flex h-full w-full items-center justify-center">
+            <div className="relative overflow-y-auto rounded-xl border border-[var(--bg-border-color)] bg-gradient-to-br from-[var(--sidebar-bg-color)] to-[var(--bg-ai-bot-text-color)] px-10 py-6 font-montserrat shadow-sm transition-all duration-500">
+                <CloseIcon
+                    className="absolute right-5 top-5 cursor-pointer duration-300 active:scale-90"
+                    onClick={() => {
+                        dispatch(closeOutputSettings())
+                    }}
+                />
+
+                <div className="text-center">
+                    <h2 className="font-extrabold bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] bg-clip-text text-[24px] text-transparent">
+                        Output Settings
+                    </h2>
+                    <p className="mt-1 text-sm text-[var(--text-color-secondary)]">
+                        Configure language, tone, style, and response format
                     </p>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown
-                                    printer
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
                 </div>
-                <div className="flex items-center gap-[10px]">
-                    <Checkbox />
-                    <p className="whitespace-nowrap text-[var(--text-color-base)]">
-                        Apply setting for all Conversations
-                    </p>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown
-                                    printer
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <div className="mt-7 flex justify-end gap-4">
-                    <Button variant="primary" className="w-[100px]">
-                        Save
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="w-[100px] font-bold"
-                        onClick={() =>
-                            setSelectedActionButton &&
-                            setSelectedActionButton('')
-                        }
-                    >
-                        Cancel
-                    </Button>
+
+                <div className="mx-auto mt-8 flex w-[430px] flex-col gap-6">
+                    <div className="flex w-full items-start gap-4">
+                        <label className="flex w-[50%] justify-between text-[16px] font-medium text-[var(--text-color-base)]">
+                            <span>Locale</span>
+                            <span>:</span>
+                        </label>
+                        <div className="w-full">
+                            <div className="flex flex-shrink-0 items-center gap-2">
+                                <PrimarySelect
+                                    mainClassName="h-[35px] w-[200px] border border-[var(--bg-border-color)] px-2 py-1"
+                                    options={languageOptions}
+                                />
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span>
+                                                <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                            <p>
+                                                Choose the output locale or use
+                                                auto-detect.
+                                            </p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex w-full items-start gap-4">
+                        <label className="flex w-[50%] justify-between text-[16px] font-medium text-[var(--text-color-base)]">
+                            <span>Voice</span>
+                            <span>:</span>
+                        </label>
+                        <div className="w-full">
+                            <div className="flex flex-shrink-0 items-center gap-2">
+                                <PrimarySelect
+                                    mainClassName="h-[35px] w-[200px] border border-[var(--bg-border-color)] px-2 py-1"
+                                    options={toneOptions}
+                                />
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span>
+                                                <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                            <p>
+                                                Select the voice/tone for
+                                                responses.
+                                            </p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex w-full items-start gap-4">
+                        <label className="flex w-[50%] justify-between text-[16px] font-medium text-[var(--text-color-base)]">
+                            <span>Writing Style</span>
+                            <span>:</span>
+                        </label>
+                        <div className="w-full">
+                            <div className="flex flex-shrink-0 items-center gap-2">
+                                <PrimarySelect
+                                    mainClassName="h-[35px] w-[200px] border border-[var(--bg-border-color)] px-2 py-1"
+                                    options={styleOptions}
+                                />
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span>
+                                                <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                            <p>
+                                                Control structure and level of
+                                                detail.
+                                            </p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex w-full items-start gap-4">
+                        <label className="flex w-[50%] justify-between text-[16px] font-medium text-[var(--text-color-base)]">
+                            <span>Output Format</span>
+                            <span>:</span>
+                        </label>
+                        <div className="w-full">
+                            <div className="flex flex-shrink-0 items-center gap-2">
+                                <PrimarySelect
+                                    mainClassName="h-[35px] w-[200px] border border-[var(--bg-border-color)] px-2 py-1"
+                                    options={formatOptions}
+                                />
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span>
+                                                <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                            <p>
+                                                Pick how the response should be
+                                                formatted.
+                                            </p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-5 flex items-center gap-[10px]">
+                        <Checkbox />
+                        <p className="text-[var(--text-color-base)]">
+                            Set all as Default
+                        </p>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span>
+                                        <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
+                                    </span>
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                    <p>
+                                        Make these values the defaults for new
+                                        conversations.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
+
+                    <div className="flex items-center gap-[10px]">
+                        <Checkbox />
+                        <p className="whitespace-nowrap text-[var(--text-color-base)]">
+                            Apply settings for all conversations
+                        </p>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span>
+                                        <InfoIcon className="cursor-pointer duration-300 active:scale-90" />
+                                    </span>
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                    <p>
+                                        Override existing conversations with
+                                        these output settings.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
+
+                    <div className="mt-7 flex justify-end gap-4">
+                        <Button variant="primary" className="w-[100px]">
+                            Save
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="w-[100px] font-bold text-[var(--text-color-base)]"
+                            onClick={() =>
+                                setSelectedActionButton &&
+                                setSelectedActionButton('')
+                            }
+                        >
+                            Cancel
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -47,6 +47,12 @@ import { closeOutputSettings } from '../reducers/outputSettingsReudcer'
 import { closeAgentSelection } from '../reducers/agentSelectionReducer'
 import { closeCreatePrompt } from '../reducers/createPromptsReducer'
 import { closeEditPrompt } from '../reducers/editPromtsReducer'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '../components/ui/dropdown-menu'
 
 interface SidebarProps {
     isSidebarOpen: boolean
@@ -300,19 +306,194 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
         })
     }
 
+    const getNextFileId = (history: FolderProps[]): number => {
+        let maxId = 0
+        history.forEach((folder) =>
+            folder.files.forEach((file) => {
+                if (file.id > maxId) maxId = file.id
+            })
+        )
+        return maxId + 1
+    }
+
+    const handleAddChatToFolder = (folderIndex: number): void => {
+        setChatHistory((prev) => {
+            const updated = [...prev]
+            const nextId = getNextFileId(prev)
+            const newTitle = `New Chat ${updated[folderIndex].files.length + 1}`
+            const newFile: FileProps = {
+                id: nextId,
+                title: newTitle,
+                component: <SinglePostRepository title={newTitle} />,
+            }
+            updated[folderIndex] = {
+                ...updated[folderIndex],
+                files: [...updated[folderIndex].files, newFile],
+            }
+            return updated
+        })
+    }
+
+    const handleDeleteFolderByIndex = (folderIndex: number): void => {
+        setChatHistory((prev) => prev.filter((_, i) => i !== folderIndex))
+    }
+
+    // ---------- Render helpers ----------
+    const renderFolderActions = (index: number): JSX.Element => (
+        <DropdownMenu>
+            <DropdownMenuTrigger className="opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="material-symbols-outlined text-[20px] text-[var(--text-color-base)]">
+                    more_horiz
+                </span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-[var(--bg-primary-color)] text-[var(--text-color-base)]">
+                <DropdownMenuItem onSelect={() => handleAddChatToFolder(index)}>
+                    <PlusIcon />
+                    <span className="ml-2">Add Chat</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => handleEditFolder(index)}>
+                    <EditIcon />
+                    <span className="ml-2">Rename</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onSelect={() => handleDeleteFolderByIndex(index)}
+                >
+                    <DeleteIcon />
+                    <span className="ml-2 text-red-500">Delete</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+    const renderFolderHeader = (
+        item: FolderProps,
+        index: number
+    ): JSX.Element => {
+        return (
+            <div className="ring-[var(--bg-border-color)]/60 font-montserrat group rounded-xl border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] px-3.5 py-2.5 shadow-sm ring-1 ring-inset transition-all duration-300 hover:shadow-md">
+                <div className="flex items-center justify-between">
+                    {editFolderIndex === index ? (
+                        <Input
+                            type="text"
+                            value={folderEditName}
+                            onChange={handleFolderNameChange}
+                            onKeyDown={(e) => handleEditFolderKeyDown(e, index)}
+                        />
+                    ) : (
+                        <AccordionTrigger className="flex flex-1 items-center gap-2 py-0 text-[13px] font-medium tracking-wide text-[var(--text-color-base)] hover:opacity-90">
+                            <span className="truncate">
+                                {item.folderName &&
+                                item.folderName.length > 18 ? (
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <span>
+                                                    {item.folderName.slice(
+                                                        0,
+                                                        18
+                                                    ) + '...'}
+                                                </span>
+                                            </TooltipTrigger>
+                                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
+                                                {item.folderName}
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                ) : (
+                                    item.folderName
+                                )}
+                            </span>
+                            <span className="rounded-full bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] px-2 py-0.5 text-xs font-semibold text-white">
+                                {item.files.length}
+                            </span>
+                        </AccordionTrigger>
+                    )}
+                    {renderFolderActions(index)}
+                </div>
+            </div>
+        )
+    }
+
+    const renderFolderFiles = (
+        item: FolderProps,
+        index: number
+    ): JSX.Element | null => {
+        if (item.files.length === 0) return null
+        return (
+            <AccordionContent className="mt-2 flex flex-col gap-2 border-b-0 pl-0">
+                {item.files.map((file) => (
+                    <div
+                        key={file.id}
+                        className="rounded-lg border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] px-2.5 py-2 transition-all duration-200 hover:-translate-y-[1px] hover:bg-[var(--bg-hover-color)]"
+                    >
+                        <DraggableFile
+                            file={{
+                                ...file,
+                                component: (
+                                    <SinglePostRepository
+                                        title={file.title}
+                                        onDelete={() =>
+                                            setChatHistory((prev) => {
+                                                const updated = [...prev]
+                                                updated[index] = {
+                                                    ...updated[index],
+                                                    files: updated[
+                                                        index
+                                                    ].files.filter(
+                                                        (f) => f.id !== file.id
+                                                    ),
+                                                }
+                                                return updated
+                                            })
+                                        }
+                                    />
+                                ),
+                            }}
+                        />
+                    </div>
+                ))}
+            </AccordionContent>
+        )
+    }
+
+    const renderFolder = (item: FolderProps, index: number): JSX.Element => (
+        <DroppableFolder
+            key={index}
+            folder={item}
+            onDrop={(file) => handleDropFileIntoFolder(index, file)}
+        >
+            {item.hasChildren ? (
+                <Accordion type="single" collapsible>
+                    <AccordionItem value={`item-${index}`}>
+                        {renderFolderHeader(item, index)}
+                        {renderFolderFiles(item, index)}
+                    </AccordionItem>
+                </Accordion>
+            ) : item.files.length > 0 ? (
+                item.files.map((file) => (
+                    <div
+                        key={file.id}
+                        className="rounded-lg border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] px-2.5 py-2 transition-all duration-200 hover:-translate-y-[1px] hover:bg-[var(--bg-hover-color)]"
+                    >
+                        <DraggableFile file={file} />
+                    </div>
+                ))
+            ) : null}
+        </DroppableFolder>
+    )
+
     return (
         <div
             className={cn(
-                'fixed left-0 top-0 z-10 flex h-screen w-[300px] transform flex-col bg-[var(--sidebar-bg-color)] p-3 font-montserrat shadow-md transition-all duration-300 ease-in-out',
+                'font-montserrat fixed left-0 top-0 z-20 flex h-screen w-[320px] transform flex-col border-r border-[var(--bg-border-color)] bg-[var(--sidebar-bg-color)] p-3 shadow-lg backdrop-blur-sm transition-all duration-500 ease-in-out',
                 isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             )}
         >
             <div className="flex grow flex-col gap-[10px] overflow-y-auto">
                 {/* Header */}
-                <div className="flex items-center justify-between rounded-[5px] bg-[var(--bg-secondary-color)] px-[10px] py-3 transition-all duration-500">
+                <div className="flex items-center justify-between rounded-xl border border-[var(--bg-border-color)] bg-[var(--bg-secondary-color)] px-[10px] py-3 shadow-sm transition-all duration-500">
                     <div className="flex items-center gap-2">
                         <div
-                            className="h-[46px] w-[46px] cursor-pointer rounded-full bg-[var(--bg-primary-color)] transition-all duration-500"
+                            className="ring-[var(--bg-border-color)]/50 h-[46px] w-[46px] cursor-pointer rounded-full bg-[var(--bg-primary-color)] ring-1 ring-inset transition-all duration-500 hover:scale-[1.02]"
                             onClick={() => {
                                 dispatch(openUserProfile())
                                 dispatch(closeSettings())
@@ -326,9 +507,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
                                 dispatch(closeEditPrompt())
                             }}
                         >
-                            <BotAvatar />
+                            {/* <BotAvatar /> */}
+                            <img
+                                src="./images/IdeaWeaveAi-transparent.png"
+                                alt="bot-avatar"
+                                width={46}
+                                height={46}
+                                className="rounded-full"
+                            />
                         </div>
-                        <h3 className="font-medium text-[var(--text-color-base)]">
+                        <h3 className="font-medium tracking-wide text-[var(--text-color-base)]">
                             IdeaWaveAI
                         </h3>
                     </div>
@@ -354,12 +542,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
                     icon={<SearchIcon />}
                     value={searchChat}
                     onChange={(e) => dispatch(setSearchChat(e.target.value))}
+                    className="focus:ring-[var(--primary-color)]/30 rounded-full border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] focus:ring-2"
                 />
                 {/* New Chat Layer */}
                 <div className="flex items-center gap-2 transition-all duration-500">
                     <Button
-                        variant="dark"
-                        className="h-[35px] w-[170px] transition-all duration-500"
+                        variant="primary"
+                        className="h-[38px] w-[180px] rounded-md shadow-sm transition-all duration-500 hover:shadow"
                         onClick={onNewChatClick}
                     >
                         + New Chat
@@ -367,7 +556,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
 
                     <div
                         className={cn(
-                            'flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-[4px] bg-[var(--bg-icon-color)] duration-300 hover:bg-[var(--bg-hover-color)] active:scale-95',
+                            'flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] shadow-sm duration-300 hover:shadow active:scale-95',
                             actionTools === 'show-input' &&
                                 'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
                         )}
@@ -379,7 +568,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
                     </div>
                     <div
                         className={cn(
-                            'flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-[4px] bg-[var(--bg-icon-color)] duration-300 hover:bg-[var(--bg-hover-color)] active:scale-95',
+                            'flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] shadow-sm duration-300 hover:shadow active:scale-95',
                             actionTools === 'archive-folder' &&
                                 'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
                         )}
@@ -391,7 +580,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
                     </div>
                     <div
                         className={cn(
-                            'flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-[4px] bg-[var(--bg-icon-color)] duration-300 hover:bg-[var(--bg-hover-color)] active:scale-95',
+                            'flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full border border-[var(--bg-border-color)] bg-[var(--bg-primary-color)] shadow-sm duration-300 hover:shadow active:scale-95',
                             actionTools === 'bookmark' &&
                                 'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
                         )}
@@ -409,151 +598,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
                         value={newFolderName}
                         onChange={(e) => setNewFolderName(e.target.value)}
                         onKeyDown={handleCreateFolder}
+                        className="border border-[var(--bg-border-color)]"
                     />
                 )}
 
                 {/* Post Repository */}
-                {chatHistory.map((item, index) => (
-                    <DroppableFolder
-                        key={index}
-                        folder={item}
-                        onDrop={(file) => handleDropFileIntoFolder(index, file)}
-                    >
-                        {item.hasChildren ? (
-                            <Accordion type="single" collapsible>
-                                <AccordionItem value={`item-${index}`}>
-                                    <div className="flex items-center justify-between pb-[14px] font-montserrat">
-                                        {editFolderIndex === index ? (
-                                            <Input
-                                                type="text"
-                                                value={folderEditName}
-                                                onChange={
-                                                    handleFolderNameChange
-                                                }
-                                                onKeyDown={(e) =>
-                                                    handleEditFolderKeyDown(
-                                                        e,
-                                                        index
-                                                    )
-                                                }
-                                            />
-                                        ) : (
-                                            <AccordionTrigger className="py-0 font-medium text-[var(--bg-dark-to-white-color)]">
-                                                {item.folderName &&
-                                                item.folderName.length > 14 ? (
-                                                    <TooltipProvider>
-                                                        <Tooltip>
-                                                            <TooltipTrigger
-                                                                asChild
-                                                            >
-                                                                <span>
-                                                                    {item.folderName.slice(
-                                                                        0,
-                                                                        14
-                                                                    ) + '... '}
-                                                                    (
-                                                                    {
-                                                                        item
-                                                                            .files
-                                                                            .length
-                                                                    }
-                                                                    )
-                                                                </span>
-                                                            </TooltipTrigger>
-                                                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                                                {
-                                                                    item.folderName
-                                                                }
-                                                            </TooltipContent>
-                                                        </Tooltip>
-                                                    </TooltipProvider>
-                                                ) : (
-                                                    item.folderName +
-                                                    ' ' +
-                                                    `(${item.files.length})`
-                                                )}
-                                            </AccordionTrigger>
-                                        )}
-
-                                        <div className="flex justify-between gap-2">
-                                            <div className="rounded-[4px] p-1 hover:bg-[var(--bg-hover-color)]">
-                                                <PlusIcon />
-                                            </div>
-                                            <div
-                                                className="rounded-[4px] p-1 hover:bg-[var(--bg-hover-color)]"
-                                                onClick={() =>
-                                                    handleEditFolder(index)
-                                                }
-                                            >
-                                                <EditIcon />
-                                            </div>
-                                            <div className="rounded-[4px] p-1 hover:bg-[var(--bg-hover-color)]">
-                                                <DeleteIcon />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {item.files.length > 0 && (
-                                        <AccordionContent className="flex flex-col gap-2 border-b-0 pl-5">
-                                            {item.files.map((file) => (
-                                                <DraggableFile
-                                                    key={file.id}
-                                                    file={file}
-                                                />
-                                            ))}
-                                        </AccordionContent>
-                                    )}
-                                </AccordionItem>
-                            </Accordion>
-                        ) : item.files.length > 0 ? (
-                            item.files.map((file) => (
-                                <DraggableFile key={file.id} file={file} />
-                            ))
-                        ) : null}
-                    </DroppableFolder>
-                ))}
+                {chatHistory.map((item, index) => renderFolder(item, index))}
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Button
-                    className="justify-start"
-                    variant="barnRed"
-                    size="sm"
-                    icon={<LicenseIcon />}
-                    onClick={() => {
-                        dispatch(openLicenseKey())
-                        dispatch(closeApplyingSettings())
-                        dispatch(closeAgentSelection())
-                        dispatch(closeOutputSettings())
-                        dispatch(closePrompt())
-                        dispatch(closeApiKey())
-                        dispatch(closeSettings())
-                        dispatch(closeUserProfile())
-                        dispatch(closeCreatePrompt())
-                        dispatch(closeEditPrompt())
-                    }}
-                >
-                    Enter License Key
-                </Button>
-                <Button
-                    className="justify-start"
-                    variant="barnRed"
-                    size="sm"
-                    icon={<KeyIcon />}
-                    onClick={() => {
-                        dispatch(openApiKey())
-                        dispatch(closeLicenseKey())
-                        dispatch(closeApplyingSettings())
-                        dispatch(closeAgentSelection())
-                        dispatch(closeOutputSettings())
-                        dispatch(closePrompt())
-                        dispatch(closeSettings())
-                        dispatch(closeUserProfile())
-                        dispatch(closeCreatePrompt())
-                        dispatch(closeEditPrompt())
-                    }}
-                >
-                    Enter API Key
-                </Button>
+            <div className="mt-2 flex flex-col gap-2 border-t border-[var(--bg-border-color)] pt-3">
                 <Button
                     className="justify-start"
                     variant="transparent"

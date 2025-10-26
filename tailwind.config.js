@@ -5,32 +5,50 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                // Brand token used for utility classes like bg-primary/10, text-primary, etc.
+                primary: '#A963F8',
+                // Design tokens mirroring the templates (light/dark).
+                'background-light': '#F7F8FC',
+                'background-dark': '#121212',
+                'surface-light': '#FFFFFF',
+                'surface-dark': '#1E1E1E',
+                'text-primary-light': '#1C1C1E',
+                'text-primary-dark': '#E4E4E4',
+                'text-secondary-light': '#6B7280',
+                'text-secondary-dark': '#9CA3AF',
+                'border-light': '#E5E7EB',
+                'border-dark': '#374151',
+
+                // Legacy tokens kept for backward compatibility with current components.
                 light: {
-                    primaryColor: '#BA00E3', // primary/500
-                    primaryColorSecond: '#7D00AE', // primary/500
-                    bgColor: '#ffffff', // base/white
-                    bgLightDarkColor: '#ffffff', // base/white
-                    textColorBase: '#1f2937', // neutral/900
-                    textColorDark: '#ffffff', // base/white
-                    linkColor: '#6d28d9', // primary/600
-                    borderColor: '#f3f4f6', // neutral/100
-                    heroBG: '#f3f4f6', // primary/50
-                    inputColor: '#f3f4f6', // primary/50
-                    grayLight: '#f3f4f6', // neutral/100
-                    grayDark: '#d1d5db', // neutral/300
+                    primaryColor: '#4F46E5', // gradient start (light)
+                    primaryColorSecond: '#9333EA', // gradient end (light)
+                    bgColor: '#F7F8FC',
+                    bgLightDarkColor: '#FFFFFF',
+                    textColorBase: '#1C1C1E',
+                    textColorDark: '#000000',
+                    linkColor: '#6d28d9',
+                    borderColor: '#E5E7EB',
+                    heroBG: '#F3F4F6',
+                    inputColor: '#F3F4F6',
+                    grayLight: '#F3F4F6',
+                    grayDark: '#D1D5DB',
+                    surface: '#FFFFFF',
                 },
                 dark: {
-                    primaryColor: '#BA00E3', // primary/500
-                    bgColor: '#0F0415',
-                    bgLightDarkColor: '#2C2C2C',
-                    textColorBase: '#ffffff', // base/white
-                    textColorDark: '#ffffff', // base/white
-                    linkColor: '#a78bfa', // primary/300
-                    borderColor: '#171717', // neutral/900
-                    heroBG: '#171717', // neutral/900
-                    inputColor: '#1e293b', // neutral/800
-                    grayLight: '#f3f4f6', // neutral/100
-                    grayDark: '#737373', // neutral/500
+                    primaryColor: '#1F2937', // gradient start (dark)
+                    primaryColorSecond: '#374151', // gradient end (dark)
+                    bgColor: '#121212',
+                    bgLightDarkColor: '#1E1E1E',
+                    textColorBase: '#E4E4E4',
+                    textColorDark: '#FFFFFF',
+                    linkColor: '#a78bfa',
+                    borderColor: '#374151',
+                    heroBG: '#171717',
+                    inputColor: '#1e293b',
+                    grayLight: '#F3F4F6',
+                    grayDark: '#737373',
+                    surface: '#1E1E1E',
                 },
             },
             keyframes: {
@@ -49,8 +67,7 @@ module.exports = {
             },
         },
         fontFamily: {
-            montserrat: ['Montserrat', 'ui-sans-serif', 'system-ui'],
-            inter: ['Inter', 'ui-sans-serif', 'system-ui'],
+            jakarta: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
         },
         fontWeight: {
             normal: 400,
@@ -64,22 +81,22 @@ module.exports = {
         function ({ addBase }) {
             addBase({
                 ':root': {
-                    '--primary-color': '#BA00E3',
-                    '--primary-color-second': '#7D00AE',
-                    '--sidebar-bg-color': '#F8F8F8',
-                    '--bg-primary-color': '#ffffff',
+                    '--primary-color': '#4F46E5',
+                    '--primary-color-second': '#9333EA',
+                    '--sidebar-bg-color': '#FFFFFF',
+                    '--bg-primary-color': '#F7F8FC',
                     '--bg-transparent': 'transparent',
-                    '--bg-light-dark-color': '#ffffff',
-                    '--bg-secondary-color': '#F1F1F1',
+                    '--bg-light-dark-color': '#FFFFFF',
+                    '--bg-secondary-color': '#FFFFFF',
                     '--bg-dark-to-white-color': '#2E2D2D',
                     '--bg-barn-red-color': '#8D2626',
-                    '--bg-border-color': '#9A9A9A',
+                    '--bg-border-color': '#E5E7EB',
                     '--bg-user-text-color': '#F1F1F1',
                     '--bg-ai-bot-text-color': '#FBFAFA',
                     '--bg-hover-color': '#ECECEC',
                     '--bg-icon-color': '#E7E7E7',
                     '--bg-track-color': '#DBDBDB',
-                    '--text-color-base': '#2E2D2D',
+                    '--text-color-base': '#1C1C1E',
                     '--text-color-secondary': '#8F8F8F',
                     '--text-color-dark': '#000000',
                     '--text-color-dark-second': '#393939',
@@ -91,24 +108,25 @@ module.exports = {
                     '--input-color': '#f3f4f6',
                     '--gray-light': '#f3f4f6',
                     '--gray-dark': '#d1d5db',
+                    '--surface': '#FFFFFF',
                 },
                 '.light-theme': {
-                    '--primary-color': '#BA00E3',
-                    '--primary-color-second': '#7D00AE',
-                    '--sidebar-bg-color': '#F8F8F8',
-                    '--bg-primary-color': '#ffffff',
+                    '--primary-color': '#4F46E5',
+                    '--primary-color-second': '#9333EA',
+                    '--sidebar-bg-color': '#FFFFFF',
+                    '--bg-primary-color': '#F7F8FC',
                     '--bg-transparent': 'transparent',
-                    '--bg-light-dark-color': '#ffffff',
-                    '--bg-secondary-color': '#F1F1F1',
+                    '--bg-light-dark-color': '#FFFFFF',
+                    '--bg-secondary-color': '#FFFFFF',
                     '--bg-dark-to-white-color': '#2E2D2D',
                     '--bg-barn-red-color': '#8D2626',
-                    '--bg-border-color': '#9A9A9A',
+                    '--bg-border-color': '#E5E7EB',
                     '--bg-user-text-color': '#F1F1F1',
                     '--bg-ai-bot-text-color': '#FBFAFA',
                     '--bg-hover-color': '#ECECEC',
                     '--bg-icon-color': '#E7E7E7',
                     '--bg-track-color': '#DBDBDB',
-                    '--text-color-base': '#2E2D2D',
+                    '--text-color-base': '#1C1C1E',
                     '--text-color-secondary': '#8F8F8F',
                     '--text-color-dark': '#000000',
                     '--text-color-dark-second': '#393939',
@@ -122,23 +140,23 @@ module.exports = {
                     '--gray-dark': '#d1d5db',
                 },
                 '.dark-theme': {
-                    '--primary-color': '#BA00E3',
-                    '--primary-color-second': '#7D00AE',
-                    '--sidebar-bg-color': '#141414',
-                    '--bg-primary-color': '#0D0D0D',
+                    '--primary-color': '#1F2937',
+                    '--primary-color-second': '#374151',
+                    '--sidebar-bg-color': '#1E1E1E',
+                    '--bg-primary-color': '#121212',
                     '--bg-transparent': 'transparent',
-                    '--bg-light-dark-color': '#2C2C2C',
-                    '--bg-secondary-color': '#1B1B1B',
+                    '--bg-light-dark-color': '#1E1E1E',
+                    '--bg-secondary-color': '#1E1E1E',
                     '--bg-dark-to-white-color': '#ffffff',
                     '--bg-barn-red-color': '#A12B2B',
-                    '--bg-border-color': '#9A9A9A',
-                    '--bg-user-text-color': '#363636',
-                    '--bg-ai-bot-text-color': '#1A1A1A',
-                    '--bg-hover-color': '#2E2E2E',
-                    '--bg-icon-color': '#252525',
+                    '--bg-border-color': '#374151',
+                    '--bg-user-text-color': '#2D3748',
+                    '--bg-ai-bot-text-color': '#1E1E1E',
+                    '--bg-hover-color': '#2D3748',
+                    '--bg-icon-color': '#1F2937',
                     '--bg-track-color': '#313131',
-                    '--text-color-base': '#D2D1D1',
-                    '--text-color-secondary': '#8F8F8F',
+                    '--text-color-base': '#E4E4E4',
+                    '--text-color-secondary': '#9CA3AF',
                     '--text-color-dark': '#ffffff',
                     '--text-color-dark-second': '#959595',
                     '--text-color-dark-third': '#D0D0D0',

@@ -1,7 +1,6 @@
 // import { useTranslation } from "react-i18next";
 
 import { useSelector } from 'react-redux'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import BookmarkSecondIcon from './svg-icons/bookmark-second-icon'
 import DeleteIcon from './svg-icons/delete-icon'
 import EmoFaceIcon from './svg-icons/emo-face-icon'
@@ -13,10 +12,17 @@ import PlayIcon from './svg-icons/play-icon'
 import ForkIcon from './svg-icons/fork-icon'
 import { useState } from 'react'
 import { cn } from '../../lib/utils'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 
 interface SinglePostRepositoryProps {
     title?: string
     mainClassName?: string
+    onDelete?: () => void
 }
 const actionMenu = [
     {
@@ -44,12 +50,10 @@ const actionMenu = [
 const SinglePostRepository: React.FC<SinglePostRepositoryProps> = ({
     title = 'Prepare Blog post',
     mainClassName = 'flex justify-between items-center font-montserrat cursor-pointer hover:bg-[var(--bg-hover-color)] p-1 rounded',
+    onDelete,
 }) => {
     //   const { t } = useTranslation();
     const { currentTheme } = useSelector((state: RootState) => state.theme)
-    const popupOptionTextColor =
-        currentTheme === 'light-theme' ? '#000000' : '#FFFFFF'
-    const popupBgColor = currentTheme === 'light-theme' ? '#FFFFFF' : '#2C2C2C'
     const [bookmark, setBookmark] = useState(false)
     const toggleBookmark = () => {
         setBookmark(!bookmark)
@@ -68,52 +72,28 @@ const SinglePostRepository: React.FC<SinglePostRepositoryProps> = ({
                     </p>
                 </div>
             </div>
-            <div className="flex items-center gap-1">
-                <div className="rounded-[4px] p-1 hover:bg-[var(--bg-hover-color)]">
-                    <DeleteIcon />
-                </div>
-                <div
-                    className={cn(
-                        'rounded-[4px] p-[2px] hover:bg-[var(--bg-hover-color)]',
-                        bookmark &&
-                            'bg-[var(--bg-dark-to-white-color)] hover:bg-[var(--bg-dark-to-white-color)]'
-                    )}
-                    onClick={toggleBookmark}
-                >
-                    <BookmarkSecondIcon selectColor={bookmark} />
-                </div>
-
-                <Popover>
-                    <PopoverTrigger>
+            <div className="group flex items-center gap-1">
+                {/* Three-dot menu appears on hover */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="opacity-0 transition-opacity group-hover:opacity-100">
                         <div className="rounded-[4px] p-1 hover:bg-[var(--bg-hover-color)]">
                             <ThreeDotIcon />
                         </div>
-                    </PopoverTrigger>
-                    <PopoverContent
-                        className="flex w-[165px] flex-col gap-2 border-0 px-3 py-2 shadow-[1px_3px_12px_0px_rgba(0,0,0,0.25)]"
-                        sideOffset={15}
-                        style={{
-                            backgroundColor: popupBgColor,
-                        }}
-                    >
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="bg-[var(--bg-primary-color)] text-[var(--text-color-base)]">
                         {actionMenu.map((item, menuIndex) => (
-                            <div
+                            <DropdownMenuItem
                                 key={menuIndex}
-                                className="menu-item flex cursor-pointer items-center gap-2 duration-300 active:scale-90"
+                                className="cursor-pointer"
                             >
                                 {item.icon}
-                                <span
-                                    className="text-[12px]"
-                                    style={{
-                                        color: popupOptionTextColor,
-                                    }}
-                                >
+                                <span className="ml-2 text-[12px]">
                                     {item.name}
                                 </span>
-                            </div>
+                            </DropdownMenuItem>
                         ))}
-                    </PopoverContent>
-                </Popover>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </div>
     )

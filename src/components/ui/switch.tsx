@@ -19,7 +19,7 @@ const Switch = React.forwardRef<
 >(({ className, checked, onCheckedChange, icon = true, ...props }, ref) => (
     <SwitchPrimitives.Root
         className={cn(
-            'focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-8 w-[70px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-white data-[state=unchecked]:bg-[#2E2D2D]',
+            'focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-8 w-[70px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[#3A475C] data-[state=unchecked]:bg-[#E5E7EB]',
             !icon &&
                 'focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-7 w-[51px] shrink-0 cursor-pointer items-center rounded-full border-[0.5px] border-[var(--text-color-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[var(--bg-dark-to-white-color)] data-[state=unchecked]:bg-[var(--sidebar-bg-color)]',
             className
@@ -32,12 +32,18 @@ const Switch = React.forwardRef<
         {icon ? (
             <SwitchPrimitives.Thumb
                 className={cn(
-                    'pointer-events-none relative block h-[26px] w-[26px] rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-[40px] data-[state=unchecked]:translate-x-0'
+                    'pointer-events-none relative block h-[26px] w-[26px] rounded-full bg-white shadow-[0_6px_12px_rgba(0,0,0,0.15)] ring-1 ring-[#D1D5DB] transition-transform data-[state=checked]:translate-x-[40px] data-[state=unchecked]:translate-x-0 data-[state=checked]:ring-[#64748B]'
                 )}
             >
-                <span className="absolute inset-0 flex items-center justify-center">
-                    {checked ? <DarkModeIcon /> : <LightModeIcon />}
-                </span>
+                {checked ? (
+                    <span className="absolute inset-0 flex items-center justify-center text-gray-500">
+                        <DarkModeIcon />
+                    </span>
+                ) : (
+                    <span className="absolute inset-0 flex items-center justify-center text-yellow-500">
+                        <LightModeIcon />
+                    </span>
+                )}
             </SwitchPrimitives.Thumb>
         ) : (
             <SwitchPrimitives.Thumb

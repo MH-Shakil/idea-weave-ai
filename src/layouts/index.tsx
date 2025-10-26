@@ -26,8 +26,8 @@ const Layout = (): JSX.Element => {
             </DndProvider>
             <div
                 className={cn(
-                    'flex w-full flex-col transition-all duration-300 ease-in-out',
-                    isSidebarOpen ? 'ml-[300px]' : 'ml-0'
+                    'flex w-full flex-col transition-all duration-500 ease-in-out',
+                    isSidebarOpen ? 'ml-[320px]' : 'ml-0'
                 )}
             >
                 <Header
@@ -36,7 +36,7 @@ const Layout = (): JSX.Element => {
                 />
                 <main
                     className={cn(
-                        'flex h-[calc(100%-94px)] flex-col bg-[var(--bg-primary-color)] p-4 transition-all duration-500'
+                        'flex min-h-[calc(100vh-64px)] flex-col bg-[var(--bg-primary-color)] px-6 py-4 transition-all duration-500'
                     )}
                 >
                     <Outlet />

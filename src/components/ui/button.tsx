@@ -11,7 +11,7 @@ const COMMON_CLASSES = `inline-flex items-center justify-center
 
 const BUTTON_VARIANTS = {
     primary:
-        'bg-[linear-gradient(180deg,_var(--primary-color),_var(--primary-color-second))] text-white border-0 ',
+        'bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] text-white border-0 ',
     dark: 'bg-[var(--bg-dark-to-white-color)] text-[var(--bg-primary-color)] ',
     barnRed: 'bg-[var(--bg-barn-red-color)] text-white ',
     transparent: 'bg-transparent text-[var(--text-color-base)]',
@@ -58,6 +58,9 @@ export interface ButtonProps
     innerClassName?: string
     icon?: React.ReactNode // Add an optional icon prop
     iconPosition?: 'left' | 'right' // Optional: Define icon position
+    isLoading?: boolean
+    block?: boolean
+    spinner?: React.ReactNode
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -69,23 +72,62 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             size = 'default',
             children,
             asChild = false,
-            icon, // Use the icon prop
-            iconPosition = 'left', // Optional: position of the icon
+            icon,
+            iconPosition = 'left',
+            isLoading,
+            block,
+            spinner,
             ...props
         },
         ref
     ) => {
         const Comp = asChild ? Slot : 'button'
 
-        const iconElement = icon && (
-            <span
-                className={cn(
-                    'mr-2 inline-flex items-center',
-                    size === 'icon' && 'mr-0'
-                )}
+        const leftIcon =
+            icon && iconPosition === 'left' ? (
+                <span
+                    className={cn(
+                        'mr-2 inline-flex items-center',
+                        size === 'icon' && 'mr-0'
+                    )}
+                >
+                    {icon}
+                </span>
+            ) : null
+
+        const rightIcon =
+            icon && iconPosition === 'right' ? (
+                <span
+                    className={cn(
+                        'ml-2 inline-flex items-center',
+                        size === 'icon' && 'ml-0'
+                    )}
+                >
+                    {icon}
+                </span>
+            ) : null
+
+        const defaultSpinner = (
+            <svg
+                className="mr-2 h-4 w-4 animate-spin"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
             >
-                {icon}
-            </span>
+                <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                />
+                <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+            </svg>
         )
 
         return (
@@ -101,9 +143,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                                 ? BUTTON_SIZE?.[size]
                                 : '',
                             'group',
-                            className
+                            className,
+                            props?.disabled && 'cursor-not-allowed',
+                            block && 'w-full'
                         )}
                         ref={ref}
+                        data-variant={variant}
+                        aria-busy={!!isLoading}
                         {...props}
                     >
                         <span
@@ -115,22 +161,29 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                                 innerClassName
                             )}
                         >
-                            {iconPosition === 'left' && iconElement}
+                            {isLoading && (spinner || defaultSpinner)}
+                            {leftIcon}
                             {children}
-                            {iconPosition === 'right' && iconElement}
+                            {rightIcon}
                         </span>
                     </Comp>
                 ) : (
                     <Comp
                         className={cn(
-                            buttonVariants({ variant, size, className })
+                            buttonVariants({ variant, size, className }),
+                            props?.disabled && 'cursor-not-allowed',
+                            block && 'w-full'
                         )}
                         ref={ref}
+                        data-variant={variant}
+                        aria-busy={!!isLoading}
+                        disabled={props?.disabled || isLoading}
                         {...props}
                     >
-                        {iconPosition === 'left' && iconElement}
+                        {isLoading && (spinner || defaultSpinner)}
+                        {leftIcon}
                         {children}
-                        {iconPosition === 'right' && iconElement}
+                        {rightIcon}
                     </Comp>
                 )}
             </>

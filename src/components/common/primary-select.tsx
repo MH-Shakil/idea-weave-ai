@@ -54,7 +54,7 @@ const PrimarySelect: React.FC<SelectComponentProps> = ({
                 {selectedValue ? (
                     <div className="flex items-center">
                         {selectedValue.icon && (
-                            <span className="mr-2 text-[24px]">
+                            <span className="mr-2 text-[20px]">
                                 {selectedValue.icon}
                             </span>
                         )}

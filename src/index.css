@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 h1 {
     font-size: 24px;
@@ -37,84 +37,62 @@ pre code {
 }
 
 body {
-    @apply font-montserrat;
+    @apply font-jakarta;
     padding: 0;
     margin: 0;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
-/***** Font Family ******/
-/* Font Family Inter */
+
+/* Material symbols font settings for consistent appearance */
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+/*** Font Family - Plus Jakarta Sans only ***/
 @font-face {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Plus Jakarta Sans';
     font-weight: 400;
-    src: url('../public/font/montserrat/Montserrat-Regular.ttf')
+    src: url('../public/font/jakarta/PlusJakartaSans-Regular.ttf')
         format('truetype');
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Plus Jakarta Sans';
     font-weight: 500;
-    src: url('../public/font/montserrat/Montserrat-Medium.ttf')
+    src: url('../public/font/jakarta/PlusJakartaSans-Medium.ttf')
         format('truetype');
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Plus Jakarta Sans';
     font-weight: 600;
-    src: url('../public/font/montserrat/Montserrat-SemiBold.ttf')
-        format('truetype');
-
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    src: url('../public/font/montserrat/Montserrat-Bold.ttf') format('truetype');
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    src: url('../public/font/montserrat/Montserrat-ExtraBold.ttf')
+    src: url('../public/font/jakarta/PlusJakartaSans-SemiBold.ttf')
         format('truetype');
     font-style: normal;
-}
-
-/* Font Family Inter */
-@font-face {
-    font-family: 'Inter';
-    font-weight: 400;
-    src: url('../public/font/inter/Inter-Regular.ttf') format('truetype');
-    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: 'Inter';
-    font-weight: 500;
-    src: url('../public/font/inter/Inter-Medium.ttf') format('truetype');
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Inter';
-    font-weight: 600;
-    src: url('../public/font/inter/Inter-SemiBold.ttf') format('truetype');
-
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Inter';
+    font-family: 'Plus Jakarta Sans';
     font-weight: 700;
-    src: url('../public/font/inter/Inter-Bold.ttf') format('truetype');
+    src: url('../public/font/jakarta/PlusJakartaSans-Bold.ttf')
+        format('truetype');
     font-style: normal;
+    font-display: swap;
 }
+
 @font-face {
-    font-family: 'Inter';
+    font-family: 'Plus Jakarta Sans';
     font-weight: 800;
-    src: url('../public/font/inter/Inter-ExtraBold.ttf') format('truetype');
+    src: url('../public/font/jakarta/PlusJakartaSans-ExtraBold.ttf')
+        format('truetype');
     font-style: normal;
+    font-display: swap;
 }

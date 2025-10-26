@@ -22,27 +22,16 @@ const ArrowRightIcon: React.FC<IconProps> = ({ selectColor = false }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
+            width="16"
+            height="16"
+            fill={themeColor}
+            className="bi bi-arrow-right-square"
+            viewBox="0 0 16 16"
         >
-            <g opacity="0.9" clipPath="url(#clip0_121_184)">
-                <path
-                    d="M4.5 12C4.5 7.59 8.09 4 12.5 4C16.91 4 20.5 7.59 20.5 12C20.5 16.41 16.91 20 12.5 20C8.09 20 4.5 16.41 4.5 12ZM2.5 12C2.5 17.52 6.98 22 12.5 22C18.02 22 22.5 17.52 22.5 12C22.5 6.48 18.02 2 12.5 2C6.98 2 2.5 6.48 2.5 12ZM12.5 11H8.5V13H12.5V16L16.5 12L12.5 8V11Z"
-                    fill={themeColor}
-                />
-            </g>
-            <defs>
-                <clipPath id="clip0_121_184">
-                    <rect
-                        width="24"
-                        height="24"
-                        fill="white"
-                        transform="translate(0.5)"
-                    />
-                </clipPath>
-            </defs>
+            <path
+                fill-rule="evenodd"
+                d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"
+            />
         </svg>
     )
 }

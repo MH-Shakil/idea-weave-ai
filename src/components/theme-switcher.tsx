@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setTheme } from '../reducers/themeReducer'
 import { RootState } from '../store'
 import { Switch } from './ui/switch'
+import DarkModeIcon from './common/svg-icons/dark-mode-icon'
+import LightModeIcon from './common/svg-icons/light-mode-icon'
 
 const ThemeSwitcher = (): JSX.Element => {
     const { currentTheme } = useSelector((state: RootState) => state.theme)
@@ -15,7 +17,11 @@ const ThemeSwitcher = (): JSX.Element => {
         dispatch(setTheme(newTheme))
     }
 
-    return <Switch checked={isChecked} onCheckedChange={handleThemeChange} />
+    return (
+        <Switch checked={isChecked} onCheckedChange={handleThemeChange} icon>
+            {isChecked ? <DarkModeIcon /> : <LightModeIcon />}
+        </Switch>
+    )
 }
 
 export default ThemeSwitcher

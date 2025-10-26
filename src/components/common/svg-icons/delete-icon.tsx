@@ -26,42 +26,14 @@ const DeleteIcon: React.FC<IconProps> = ({
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
+            width="16"
+            height="16"
+            fill={themeColor}
             className={className}
+            viewBox="0 0 16 16"
         >
-            <path
-                d="M5.8335 7V9.91667"
-                stroke={themeColor}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M8.1665 7V9.91667"
-                stroke={themeColor}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M2.3335 4.08334H11.6668"
-                stroke={themeColor}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M3.5 5.83334V10.5C3.5 11.4665 4.2835 12.25 5.25 12.25H8.75C9.71652 12.25 10.5 11.4665 10.5 10.5V5.83334"
-                stroke={themeColor}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M5.25 2.91667C5.25 2.27233 5.77233 1.75 6.41667 1.75H7.58333C8.22768 1.75 8.75 2.27233 8.75 2.91667V4.08333H5.25V2.91667Z"
-                stroke={themeColor}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
         </svg>
     )
 }

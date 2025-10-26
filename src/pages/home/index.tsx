@@ -1,7 +1,4 @@
 import React, { useState, useRef, useMemo, useCallback } from 'react'
-import ThinkBoxLogo from '../../components/common/svg-icons/thinkbox-logo'
-// import PrimarySelect from '../../components/common/primary-select'
-import InfoIcon from '../../components/common/svg-icons/info-icon'
 import { useTranslation } from 'react-i18next'
 import BottomLayout from '../../components/common/bottom-layout'
 import AiAgentSelection from '../../components/common/ai-agent-selection'
@@ -14,28 +11,12 @@ import { RootState } from '../../store'
 import LicenseKey from '../../components/common/license-key'
 import Apikey from '../../components/common/api-key'
 import UserProfile from '../../components/common/user-profile'
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '../../components/ui/tooltip'
 import { v4 as uuidv4 } from 'uuid'
 import { addMessage } from '../../reducers/chatMessages'
 import EditPrompt from '../../components/common/prompt-selection/edit-prompt'
 // import Settings from '../../components/common/settings'
 import OutputSettings from '../../components/common/output-settings'
 import Settings from '../../components/common/settings'
-import { IoChevronDown } from 'react-icons/io5'
-import { closeApplyingSettings } from '../../reducers/applySettingsReducer'
-import { closePrompt } from '../../reducers/promptsReducer'
-import { closeLicenseKey } from '../../reducers/lisenceKeyReducer'
-import { closeApiKey } from '../../reducers/apiKeyReducer'
-import { closeSettings } from '../../reducers/settingsReducer'
-import { closeUserProfile } from '../../reducers/userProfileReducer'
-import { openAgentSelection } from '../../reducers/agentSelectionReducer'
-import { closeCreatePrompt } from '../../reducers/createPromptsReducer'
-import { closeEditPrompt } from '../../reducers/editPromtsReducer'
 
 const GO_FOR_TUTORIAL = `In Go (Golang), the \`for\` loop is the only looping construct provided, and it can be used in several ways to iterate over a range of values. Here are a few common ways to use the \`for\` loop in Go:
 
@@ -296,7 +277,7 @@ const HomePage = (): JSX.Element => {
 
     return (
         <>
-            <div className="flex grow overflow-y-auto px-9 font-montserrat">
+            <div className="font-montserrat flex grow overflow-y-auto px-9">
                 {isAgentSelectionOpen && <AiAgentSelection />}
                 {isCreatePromptOpen && <CreatePrompt />}
                 {isEditPromptOpen && <EditPrompt />}
@@ -310,56 +291,60 @@ const HomePage = (): JSX.Element => {
                 {!isOtherSectionActive && (
                     <>
                         {messages.length === 0 ? (
-                            <div className="flex h-full w-full flex-col items-center justify-center gap-5">
-                                <ThinkBoxLogo />
-                                <div className="flex items-center gap-2">
-                                    <h5 className="text-sm font-medium text-[var(--text-color-base)]">
-                                        {t('System Instruction:')}
-                                    </h5>
-                                    <div
-                                        className="flex h-[30px] w-[235px] cursor-pointer items-center justify-between rounded-[4px] border border-[var(--text-color-base)] px-2 py-1 font-inter"
-                                        onClick={() => {
-                                            dispatch(openAgentSelection())
-                                            dispatch(closeApplyingSettings())
-                                            dispatch(closePrompt())
-                                            dispatch(closeLicenseKey())
-                                            dispatch(closeApiKey())
-                                            dispatch(closeSettings())
-                                            dispatch(closeUserProfile())
-                                            dispatch(closeCreatePrompt())
-                                            dispatch(closeEditPrompt())
-                                        }}
-                                    >
-                                        <h3 className="text-[14px] text-[var(--text-color-base)]">
-                                            {t('English Teacher')}
-                                        </h3>
-                                        <IoChevronDown className="h-4 w-4 opacity-50" />
+                            <div className="flex h-full w-full items-center justify-center">
+                                <div className="mx-auto w-full max-w-[720px] rounded-2xl border border-[var(--bg-border-color)] bg-gradient-to-br from-[var(--bg-track-color)] to-[var(--bg-ai-bot-text-color)] p-8 text-center shadow-sm">
+                                    <img
+                                        src="./images/IdeaWeaveAi-with-log.png"
+                                        alt="IdeaWeaveAI logo"
+                                        className="mx-auto mb-4 h-[140px] w-[140px]"
+                                    />
+                                    <h1 className="font-extrabold bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] bg-clip-text text-3xl text-transparent">
+                                        IdeaWeaveAI
+                                    </h1>
+                                    <p className="mx-auto mt-2 max-w-[560px] text-[var(--text-color-dark-second)]">
+                                        Your AI partner for content, code and
+                                        creative ideation. Ask anything or try a
+                                        quick prompt below.
+                                    </p>
+
+                                    <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                                        <button
+                                            className="rounded-full bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] px-4 py-2 text-sm font-medium text-white shadow active:scale-95"
+                                            onClick={() =>
+                                                setUserInput(
+                                                    'Create a blog post outline about AI productivity tools'
+                                                )
+                                            }
+                                        >
+                                            Create a blog post outline
+                                        </button>
+                                        <button
+                                            className="rounded-full bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] px-4 py-2 text-sm font-medium text-white shadow active:scale-95"
+                                            onClick={() =>
+                                                setUserInput(
+                                                    'Generate 5 catchy titles for a tech newsletter'
+                                                )
+                                            }
+                                        >
+                                            Generate 5 catchy titles
+                                        </button>
+                                        <button
+                                            className="rounded-full bg-[linear-gradient(to_right,_var(--primary-color),_var(--primary-color-second))] px-4 py-2 text-sm font-medium text-white shadow active:scale-95"
+                                            onClick={() =>
+                                                setUserInput(
+                                                    'Explain closures in JavaScript with a simple example'
+                                                )
+                                            }
+                                        >
+                                            Explain JS closures
+                                        </button>
                                     </div>
 
-                                    <TooltipProvider>
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <span>
-                                                    <InfoIcon />
-                                                </span>
-                                            </TooltipTrigger>
-                                            <TooltipContent className="max-w-[300px] bg-[var(--bg-primary-color)] text-[var(--text-color-dark)]">
-                                                <p>
-                                                    Lorem Ipsum is simply dummy
-                                                    text of the printing and
-                                                    typesetting industry. Lorem
-                                                    Ipsum has been the
-                                                    industry's standard dummy
-                                                    text ever since the 1500s,
-                                                    when an unknown printer
-                                                </p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
+                                    <p className="mt-6 text-xs text-[var(--text-color-dark-third)]">
+                                        Tip: Press Enter to send, Shift+Enter
+                                        for a new line
+                                    </p>
                                 </div>
-                                <p className="w-[50%] text-center text-[var(--text-color-dark-third)]">
-                                    {t('englishTeacherDescription')}
-                                </p>
                             </div>
                         ) : (
                             <ChatBox messages={messages} />
